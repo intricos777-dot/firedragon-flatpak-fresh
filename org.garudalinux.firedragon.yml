@@ -1,10 +1,10 @@
 app-id: org.garudalinux.firedragon
 runtime: org.freedesktop.Platform
-runtime-version: '25.08'
+runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
 base: org.mozilla.firefox.BaseApp
-base-version: '25.08'
-command: firedragon
+base-version: '24.08'
+command: firedragon-wrapper
 finish-args:
   - --allow=devel
   - --share=ipc
@@ -56,13 +56,20 @@ modules:
     sources:
       - type: file
         url: https://gitlab.com/garuda-linux/firedragon/firedragon13/-/releases/v13.5.1/downloads/firedragon.linux-arm64.tar.xz
-        sha256: f2ea7e1629dea1ebf281f9a4365747874f857f54934c2d4e392a905a3f80e57e
+        sha256: f2ea7e1629dea1ebf281f9a4365747874f857f4934c2d4e392a905a3f80e57e
         x-checker-data:
           is-main-source: true
           type: json
           url: https://gitlab.com/api/v4/projects/75420733/releases/permalink/latest
           version-query: .tag_name
           url-query: '"https://gitlab.com/garuda-linux/firedragon/firedragon13/-/releases/\(.tag_name)/downloads/firedragon.linux-arm64.tar.xz"'
+  - name: firedragon-wrapper
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 firedragon-wrapper /app/bin/firedragon-wrapper
+    sources:
+      - type: file
+        path: firedragon-wrapper
   - name: firedragon
     buildsystem: simple
     build-commands:
